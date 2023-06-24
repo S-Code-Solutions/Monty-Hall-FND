@@ -1,0 +1,48 @@
+<section class="container-fluid">
+<div class="text-center mt-3">
+  <label for="numSimulations" style="font-weight: bold">Number of Simulations:&nbsp;</label>
+  <input type="number" id="numSimulations" [(ngModel)]="numSimulations">
+</div>
+
+<div class="text-center mt-3">
+  <label for="changeDoor" style="font-weight: bold">Change Door:&nbsp;</label>
+  <input type="checkbox" id="changeDoor" [(ngModel)]="changeDoor">
+</div>
+
+  <div class="d-flex justify-content-center mt-3">
+    <button type="button" class="btn btn-primary" (click)="startSimulation()">Start Simulation</button>
+  </div>
+
+
+<div *ngIf="simulationResults">
+  <h3>Simulation Results:</h3>
+  <div *ngFor="let result of simulationResults; let i = index">
+    <h4 class="text-center mt-4 mb-1" style="color: #3498db">Simulation {{ i + 1 }}</h4>
+    <h4 class="mb-4 text-center vicTitle" [ngClass]="{'text-green': result.isWin, 'text-red': !result.isWin}">
+       {{ result.isWin ? 'Won' : 'Lost' }}
+    </h4>
+    <div>
+      <div class="doors">
+        <div class="door" [ngClass]="{'selected': result.playerChoice === 0, 'opened': result.montyOpens === 0}">
+          <img  [src]="getDoorImage(result, 0)" alt="Door Image">
+          <h5 class="door-text ">Door-1</h5>
+        </div>
+        <div class="door" [ngClass]="{'selected': result.playerChoice === 1, 'opened': result.montyOpens === 1}">
+          <img [src]="getDoorImage(result, 1)" alt="Door Image">
+          <h5 class="door-text ">Door-2</h5>
+        </div>
+        <div class="door" [ngClass]="{'selected': result.playerChoice === 2, 'opened': result.montyOpens === 2}">
+          <img [src]="getDoorImage(result, 2)" alt="Door Image">
+          <h5 class="door-text ">Door-3</h5>
+        </div>
+      </div>
+
+    </div>
+    <div class=" mt-5 ">
+      <p class="text-center" style="font-weight: bold">Monty Opens: Door {{ result.montyOpens + 1 }}</p>
+      <p class="text-center" style="font-weight: bold">Player Choice: Door {{ result.playerChoice + 1 }}</p>
+      <p class="text-center" style="font-weight: bold">Result: {{ result.isWin ? 'Won' : 'Lost' }}</p>
+    </div>
+  </div>
+</div>
+</section>

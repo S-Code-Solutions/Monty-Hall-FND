@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Monty_Hall_FND';
+  title = 'Monty Hall Paradox';
+
+  constructor() { }
 }
