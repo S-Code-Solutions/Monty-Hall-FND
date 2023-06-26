@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {SimulationService} from "../../services/simulation.service";
-import {Observable} from "rxjs";
+import {catchError, Observable, throwError} from "rxjs";
 
 @Component({
   selector: 'app-game',
@@ -22,9 +22,17 @@ export class GameComponent implements OnInit {
   startSimulation(): void {
     this.simulationService
       .simulateGames(this.numSimulations, this.changeDoor)
+      .pipe(
+        catchError(error => {
+          // Handle the error appropriately
+          console.error('An error occurred during simulation:', error);
+          // Optionally, re-throw the error to propagate it further
+          return throwError(error);
+        })
+      )
       .subscribe(results => {
         this.simulationResults = results;
-        console.log(this.simulationResults)
+        console.log(this.simulationResults);
       });
   }
 
